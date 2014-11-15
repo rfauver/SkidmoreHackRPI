@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Find the longitude and latitude of the opposite side of the world.</p>
+
+<button onclick="getLocation()">Go</button>
+
+<p id="location-find"></p>
+
+<script>
+var x = document.getElementById("location-find");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Your current Latitude: " + position.coords.latitude + 
+    "<br>and you current Longitude: " + position.coords.longitude;
+
+    var oppositeLat = position.coords.latitude; 
+    var oppositeLon = position.coords.longitude;
+
+    if (oppositeLon < 0)
+    {
+      oppositeLon += 180;
+    }
+    else
+    {
+      oppositeLon -= 180;
+    }
+    oppositeLat = oppositeLat * -1;
+    x.innerHTML += "<br><br>The latitude opposite you: " + oppositeLat + 
+                   "<br>The longitude opposite you: " + oppositeLon;
+
+    }
+    
+</script>
+
+</body>
+</html>
