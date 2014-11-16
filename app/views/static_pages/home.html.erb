@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title> Location-based News App
+</title>    
+<style>   
+body{
+    
+    background-image: url(http://i.ytimg.com/vi/SCPsszfQpCM/maxresdefault.jpg);
+    background-repeat: : no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+
+    color: #99CC99;
+    
+}
+</style>
+</head>
+
 <body>
+
 
 <p>Find the longitude and latitude of the opposite side of the world.</p>
 
@@ -18,6 +36,8 @@ function getLocation() {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
+
+
 
 function showPosition(position) {
     x.innerHTML = "Your current Latitude: " + position.coords.latitude + 
