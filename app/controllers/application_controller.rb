@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :trip_advisor_call
   helper_method :ring_search
+  helper_method :bing_search
 
   def trip_advisor_call(longitude, lattitude)
     uri = URI("http://api.tripadvisor.com/api/partner/1.0/map/#{lattitude},#{longitude}?key=7f2d53f6-7bec-4b9a-b778-0695f608ba9c")
@@ -18,7 +19,6 @@ class ApplicationController < ActionController::Base
     count = 0
     r = 0
     degrees = 0
-
 
     while (degrees < 360)
       tempResult = trip_advisor_call(compute_ring_lon(lon, radius, degrees), compute_ring_lat(lat, radius, degrees))
@@ -33,31 +33,17 @@ class ApplicationController < ActionController::Base
       degrees += 40
     end
     return "nothing found"
+  end
 
-
-
-
-    # tempResult = trip_advisor_call(lon, lat)
-    # while tempResult["data"].empty? 
-    #   count += 1
-    #   if count %10 == 0 && count != 0
-    #     sleep(1.01)
-    #   end
-    #   if count%4 == 0
-    #     r += 1
-    #     tempResult = trip_advisor_call(lon + r, lat)
-    #   elsif count%4 == 1
-    #     tempResult = trip_advisor_call(lon, lat + r)
-    #   elsif count%4 == 2
-    #     tempResult = trip_advisor_call(lon - r, lat)
-    #   else
-    #     tempResult = trip_advisor_call(lon, lat - r)
-    #   end
-    # end
-    # if tempResult.nil?
-    #   return "not found"
-    # end
-    # tempResult
+  def bing_search query
+    bing_news = Bing.new("Y2lKZazLoLw0bt4pMSqV8t5Qp3t+7HSoxW60Lw2RbyA", 10, 'News')
+    bing_results = bing_news.search(query)
+    # return bing_results
+    output = ''
+    bing_results.first[:News].each do |res_hash|
+      output += "<h2><a href='#{res_hash[:Url]}'>#{res_hash[:Title]}</a></h2><br>" 
+    end
+    output
   end
 
   def compute_ring_lon lon, radius, degrees

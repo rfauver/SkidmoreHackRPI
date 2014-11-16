@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+.results-div {
+  color: #000;
+  background: #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 60%;
+  margin: 0 auto;
+}
