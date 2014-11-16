@@ -1,6 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
-    @lat_lng = cookies[:lat_lng].split("|")
+    if (!cookies[:lat_lng].nil?)
+      @lat_lng = cookies[:lat_lng].split("|")
+    end
   end
 
   def new

@@ -16,11 +16,7 @@ body{
 }
 </style>
 </head>
-
 <body>
-
-
-<p>Find the longitude and latitude of the opposite side of the world.</p>
 
 <button onclick="getLocation()">Go</button>
 
@@ -80,9 +76,12 @@ function showPosition(position) {
 
 <p> <%= @lat_lng[0].to_f%> </p>
 
-<p>
-<%= ring_search(@lat_lng[1].to_f, @lat_lng[0].to_f, 100) %>
-</p>
+<div class="results-div">
+  <h1> Local News in <%= ring_search(@lat_lng[1].to_f, @lat_lng[0].to_f, 100) %></h1>
+  <p> 
+    <%= bing_search(ring_search(@lat_lng[1].to_f, @lat_lng[0].to_f, 100)).html_safe %> 
+  </p>
+</div>
 
 </body>
 </html>
