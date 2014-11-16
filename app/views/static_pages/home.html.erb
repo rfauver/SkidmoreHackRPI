@@ -26,17 +26,31 @@ body{
 
 <p id="location-find"></p>
 
+
+<%- unless @lat_lng %>
+<script>
+  getGeoLocation();
+</script>
+<%- end %>
+
+
 <script>
 var x = document.getElementById("location-find");
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(setGeoCookie);
     } else { 
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
+
+
+function setGeoCookie(position) {
+  var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+  document.cookie = "lat_lng=" + escape(cookie_val);
+}
 
 
 function showPosition(position) {
@@ -58,12 +72,16 @@ function showPosition(position) {
     x.innerHTML += "<br><br>The latitude opposite you: " + oppositeLat + 
                    "<br>The longitude opposite you: " + oppositeLon;
 
+    $("result").value = position.coords.latitude
+
     }
     
 </script>
 
+<p> <%= @lat_lng[0].to_f%> </p>
+
 <p>
-<%= ring_search(-73.691785, 42.7284, 2300) %>
+<%= ring_search(@lat_lng[1].to_f, @lat_lng[0].to_f, 100) %>
 </p>
 
 </body>
